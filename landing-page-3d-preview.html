@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibechain AI - 3D Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero 3D Section */
+        .hero-3d {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 3D Elements Container */
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* Common 3D Animation */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotateY(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotateY(180deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateY(0deg) rotateX(10deg);
+            }
+
+            100% {
+                transform: rotateY(360deg) rotateX(10deg);
+            }
+        }
+
+        /* Ethereum Object (Diamond Shape) */
+        .eth-container {
+            position: absolute;
+            top: 20%;
+            right: 15%;
+            width: 100px;
+            height: 160px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .eth-shape {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.8));
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            animation: spin 8s linear infinite;
+        }
+
+        /* Bitcoin Object (Coin) */
+        .btc-container {
+            position: absolute;
+            top: 30%;
+            left: 15%;
+            width: 120px;
+            height: 120px;
+            animation: float 7s ease-in-out infinite 1s;
+        }
+
+        .btc-coin {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+            border: 4px solid #fbbf24;
+            animation: spin 10s linear infinite reverse;
+        }
+
+        /* Cardano Object (Sphere/Dots) */
+        .ada-container {
+            position: absolute;
+            bottom: 20%;
+            right: 25%;
+            width: 100px;
+            height: 100px;
+            animation: float 8s ease-in-out infinite 2s;
+        }
+
+        .ada-sphere {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #3b82f6, #1e3a8a);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            position: relative;
+            animation: spin 12s linear infinite;
+        }
+
+        .ada-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px dotted rgba(255, 255, 255, 0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <!-- Using the uploaded image -->
+            <img src="public/images/vibechain-logo.png" alt="Vibechain Logo" class="logo-img">
+            <span class="logo-text">Vibechain AI</span>
+        </div>
+        <button class="btn" style="padding: 10px 20px; font-size: 0.9rem;">Connect Wallet</button>
+    </header>
+
+    <section class="hero-3d">
+        <div class="scene">
+            <!-- Ethereum -->
+            <div class="eth-container">
+                <div class="eth-shape"></div>
+            </div>
+
+            <!-- Bitcoin -->
+            <div class="btc-container">
+                <div class="btc-coin">₿</div>
+            </div>
+
+            <!-- Cardano -->
+            <div class="ada-container">
+                <div class="ada-sphere">
+                    <div class="ada-dots"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Future of Payments</h1>
+            <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 30px; max-width: 600px;">
+                Experience the power of dual-blockchain technology with AI-driven interactions.
+            </p>
+            <button class="btn">Get Started</button>
+        </div>
+    </section>
+</body>
+
+</html>

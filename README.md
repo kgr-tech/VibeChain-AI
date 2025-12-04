@@ -1,199 +1,197 @@
-# Vibechain AI - Financial Dashboard
+# 🌊 Vibechain AI - Dual-Blockchain DApp
 
-Modern blockchain financial dashboard built with **Next.js 14**, **Material UI**, and **Supabase**.
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![Material-UI](https://img.shields.io/badge/Material--UI-5-blue)](https://mui.com/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-## Features
+> **Blockchain payments powered by AI**. Send cryptocurrency with natural language on Ethereum and Cardano.
 
-### 🏠 Dashboard
-- Real-time status indicators (Red/Yellow/Green)
-- Treasury growth visualization
-- Recent transaction activity
-- Metric cards with gradients
+## 🎯 Features
 
-### 💳 NFT Receipts (Layer 1)
-- Permanent on-chain payment receipts
-- Holographic card effects
-- Transaction verification status
+### 🔗 Dual Blockchain Support
+- **Ethereum**: Solidity smart contracts on EVM chains
+- **Cardano**: OpShin (Python) smart contracts on Cardano
+- Automatic chain detection from wallet addresses
 
-### 💰 Community Credit
-- On-chain reputation score
-- Micro-loan requests
-- Loan history tracking
+### 🤖 AI-Powered Chat-to-Pay
+- Natural language payment processing
+- LangChain + Google Gemini AI integration
+- Payment verification dialog for security
+- "Send 0.1 ETH to 0x..." - AI handles the rest
 
-### 📈 Growth Model (Layer 2)
-- Automated payroll in stablecoins
-- Invoice financing
-- Multi-signature treasury management
+### 💳 Smart Contract Features
+- On-chain payment processing
+- Automatic QR code receipt generation
+- Transaction verification
+- Payment history tracking
+- Blockchain explorer integration
 
-### 🏢 Enterprise Mode (Layer 3)
-- Cross-chain settlement
-- KYC/AML compliance dashboard
-- Smart treasury with auto-rebalancing
+### 🔐 Security
+- Mandatory payment verification
+- Wallet signature required
+- Gas/fee estimation
+- Network validation
+- Testnet-first approach
 
-### 🔐 Authentication
-- Supabase authentication
-- Email/password sign-in
-- User profile management
-- Protected routes
+### 🎨 Beautiful UI/UX
+- Premium dark theme with gradients
+- Glassmorphism effects
+- Material UI components
+- Smooth animations
+- Fully responsive design
 
-## Tech Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **UI Library**: Material UI 5
-- **Backend**: Supabase (PostgreSQL + Auth)
-- **Styling**: Emotion (CSS-in-JS)
-- **Charts**: Recharts
-- **Icons**: Material UI Icons
-- **TypeScript**: Full type safety
-- **Deployment**: Vercel
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Supabase account (free tier available)
+- MetaMask or Cardano wallet (Eternal/Nami/Flint)
+- Google Gemini API key
+- Supabase account (optional)
 
-### 1. Clone and Install
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/vibechain-ai.git
+cd vibechain-ai
+
 # Install dependencies
 npm install
-```
 
-### 2. Supabase Setup
+# Copy environment variables
+copy .env.local.example .env.local
 
-1. **Create a Supabase project**:
-   - Go to [https://supabase.com](https://supabase.com)
-   - Click "New Project"
-   - Fill in project details and wait for setup to complete
+# Add your API keys to .env.local
+# - NEXT_PUBLIC_GEMINI_API_KEY
+# - NEXT_PUBLIC_SUPABASE_URL
+# - NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-2. **Get your credentials**:
-   - Go to Project Settings > API
-   - Copy the `Project URL` and `anon/public` key
-
-3. **Run database migration**:
-   - Go to SQL Editor in Supabase dashboard
-   - Copy contents from `supabase/migrations/001_initial_schema.sql`
-   - Run the SQL to create tables and policies
-
-4. **Configure environment variables**:
-   ```bash
-   # Copy the example file
-   cp .env.local.example .env.local
-   ```
-   
-   Edit `.env.local` and add your Supabase credentials:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your-project-url.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-   ```
-
-### 3. Run Development Server
-
-```bash
+# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-- **Landing page**: Public homepage with sign-in/sign-up
-- **Dashboard**: Protected route at `/dashboard` (requires authentication)
+## 📦 Tech Stack
 
-## Deployment to Vercel
+| Category | Technology |
+|----------|------------|
+| **Frontend** | Next.js 14, React 18, TypeScript |
+| **UI Library** | Material UI 5, Emotion |
+| **Ethereum** | Ethers.js v6, Solidity |
+| **Cardano** | Mesh SDK, Lucid, OpShin (Python) |
+| **AI** | LangChain, Google Gemini Pro |
+| **Backend** | Supabase, PostgreSQL |
+| **Deployment** | Vercel |
 
-### 1. Push to GitHub
+## 🔧 Smart Contracts
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin your-repo-url
-git push -u origin main
+### Ethereum (Solidity)
+Located in `contracts/VibechainPayment.sol`
+- Deploy to Sepolia testnet for testing
+- See [WEB3_SETUP.md](WEB3_SETUP.md) for deployment guide
+
+### Cardano (OpShin)
+Located in `contracts/cardano/vibechain_payment.py`
+- Compile with OpShin
+- Deploy to Preprod testnet
+- See [CARDANO_SETUP.md](CARDANO_SETUP.md) for deployment guide
+
+## 🌐 Environment Variables
+
+```env
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+
+# Google Gemini AI
+NEXT_PUBLIC_GEMINI_API_KEY=your-gemini-api-key
+
+# Smart Contracts
+NEXT_PUBLIC_PAYMENT_CONTRACT_ADDRESS=0x... # Ethereum
+NEXT_PUBLIC_CARDANO_CONTRACT_ADDRESS=addr_test1... # Cardano
+NEXT_PUBLIC_CARDANO_NETWORK=preprod
+NEXT_PUBLIC_BLOCKFROST_API_KEY=your-blockfrost-key
 ```
 
-### 2. Deploy to Vercel
+## 📱 Usage
 
-1. Go to [https://vercel.com](https://vercel.com)
-2. Click "New Project"
-3. Import your GitHub repository
-4. Add environment variables:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-5. Click "Deploy"
+### Connect Wallet
+1. Click "Connect Wallet" in header
+2. Choose MetaMask (Ethereum) or Cardano wallet
+3. Approve connection
 
-### 3. Configure Supabase Redirect URLs
+### Send Payment
+**Option 1: Payment Form**
+1. Go to `/payments`
+2. Enter recipient address and amount
+3. Review and confirm
+4. Get QR code receipt
 
-After deployment, add your Vercel URL to Supabase:
-1. Go to Authentication > URL Configuration
-2. Add your Vercel URL to "Site URL"
-3. Add `https://your-app.vercel.app/auth/callback` to "Redirect URLs"
+**Option 2: Chat-to-Pay**
+1. Click chat button (bottom-right)
+2. Type: "Send 0.1 ETH to 0x..."
+3. Review verification dialog
+4. Confirm payment
 
-## Project Structure
+## 📚 Documentation
+
+- [Web3 Setup Guide](WEB3_SETUP.md) - Ethereum deployment
+- [Cardano Setup Guide](CARDANO_SETUP.md) - Cardano deployment
+- [Local Development](LOCALHOST.md) - Running locally
+- [Complete Walkthrough](C:\Users\gires\.gemini\antigravity\brain\4895b06c-c8ae-4d3c-9725-8a790804560e\walkthrough.md) - Full feature guide
+
+## 🎯 Project Structure
 
 ```
 vibechain-ai/
-├── app/                    # Next.js app router pages
+├── app/                    # Next.js app directory
 │   ├── page.tsx           # Landing page
-│   ├── dashboard/         # Protected dashboard
-│   ├── receipts/          # NFT Receipts
-│   ├── credit/            # Community Credit
-│   ├── growth/            # Growth Model
-│   ├── enterprise/        # Enterprise Mode
-│   └── auth/              # Auth callback
-├── components/
-│   ├── auth/              # Authentication components
-│   ├── landing/           # Landing page sections
-│   ├── layout/            # Sidebar, Header
-│   ├── dashboard/         # Dashboard widgets
-│   ├── receipts/          # Receipt components
-│   ├── credit/            # Credit components
-│   ├── growth/            # Growth components
-│   └── enterprise/        # Enterprise components
-├── contexts/
-│   └── AuthContext.tsx    # Authentication state
-├── lib/
-│   ├── supabase/          # Supabase clients
-│   └── database/          # Database types
-├── supabase/
-│   └── migrations/        # SQL migrations
-└── theme/
-    └── theme.ts           # MUI theme configuration
+│   ├── dashboard/         # Dashboard (protected)
+│   └── payments/          # Payment processor
+├── components/            # React components
+│   ├── wallet/           # Wallet connectors
+│   ├── payment/          # Payment processing
+│   ├── chatbot/          # AI chatbot
+│   └── layout/           # Layout components
+├── contracts/            # Smart contracts
+│   ├── VibechainPayment.sol      # Ethereum/Solidity
+│   └── cardano/
+│       └── vibechain_payment.py  # Cardano/OpShin
+├── lib/                  # Utilities
+│   ├── contracts/       # Contract interactions
+│   └── chatbot/         # Gemini AI integration
+├── contexts/            # React contexts
+└── theme/              # Material UI theme
 ```
 
-## Design System
+## 🤝 Contributing
 
-### Colors
-- **Primary**: Blue (#3b82f6)
-- **Secondary**: Purple (#a855f7)
-- **Success**: Green (#10b981)
-- **Warning**: Yellow (#f59e0b)
-- **Error**: Red (#ef4444)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Theme Features
-- Dark mode by default
-- Glassmorphism effects
-- Gradient backgrounds
-- Smooth animations
+## 📄 License
 
-## Scripts
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-```
+## 🙏 Acknowledgments
 
-## Authentication Flow
+- [Next.js](https://nextjs.org/)
+- [Material-UI](https://mui.com/)
+- [Ethers.js](https://docs.ethers.org/)
+- [Mesh SDK](https://meshjs.dev/)
+- [LangChain](https://www.langchain.com/)
+- [Google Gemini](https://ai.google.dev/)
+- [OpShin](https://github.com/OpShin/opshin)
 
-1. User visits landing page at `/`
-2. Clicks "Sign In" or "Sign Up"
-3. Enters credentials in modal
-4. Redirected to `/dashboard` after successful authentication
-5. All dashboard routes are protected
-6. User can sign out from header menu
+## 🔗 Links
 
-## License
+- [Live Demo](#) - Coming soon
+- [Documentation](WEB3_SETUP.md)
+- [Report Issues](https://github.com/YOUR_USERNAME/vibechain-ai/issues)
 
-MIT
+---
 
+**Built with ❤️ using dual-blockchain technology**
+
+🌊 Ethereum + Cardano | 🤖 AI-Powered | 🔐 Secure
