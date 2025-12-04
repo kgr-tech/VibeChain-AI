@@ -3,7 +3,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![Material-UI](https://img.shields.io/badge/Material--UI-5-blue)](https://mui.com/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 
 > **Blockchain payments powered by AI**. Send cryptocurrency with natural language on Ethereum and Cardano.
 
