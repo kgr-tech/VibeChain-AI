@@ -173,6 +173,6 @@ export function useWallet() {
 declare global {
     interface Window {
         ethereum?: any;
-        cardano?: any;
+        cardano: any;
     }
 }
