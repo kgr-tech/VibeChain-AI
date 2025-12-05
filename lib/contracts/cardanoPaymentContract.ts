@@ -1,6 +1,6 @@
 'use client';
 
-import { BlockfrostProvider, MeshWallet, MeshTxBuilder } from '@meshsdk/core';
+import { BlockfrostProvider, MeshTxBuilder } from '@meshsdk/core';
 
 // Cardano network configuration
 const CARDANO_NETWORK = process.env.NEXT_PUBLIC_CARDANO_NETWORK || 'preprod';
@@ -20,8 +20,17 @@ export interface CardanoPaymentData {
     txHash?: string;
 }
 
+// Browser wallet API interface
+interface BrowserWalletApi {
+    getUsedAddresses(): Promise<string[]>;
+    getUtxos(): Promise<string[]>;
+    signTx(tx: string, partialSign?: boolean): Promise<string>;
+    submitTx(tx: string): Promise<string>;
+    getBalance(): Promise<string>;
+}
+
 export class CardanoPaymentContract {
-    private wallet: MeshWallet | null = null;
+    private walletApi: BrowserWalletApi | null = null;
     private provider: BlockfrostProvider;
 
     constructor() {
@@ -30,21 +39,20 @@ export class CardanoPaymentContract {
     }
 
     /**
-     * Initialize wallet with browser wallet API
+     * Initialize with browser wallet API (from window.cardano.walletName.enable())
      */
-    async initialize(walletApi: any): Promise<void> {
-        // Store the wallet API for later use
-        this.wallet = await MeshWallet.enable(walletApi);
+    async initialize(walletApi: BrowserWalletApi): Promise<void> {
+        this.walletApi = walletApi;
     }
 
     /**
      * Get connected wallet address
      */
     async getWalletAddress(): Promise<string> {
-        if (!this.wallet) {
+        if (!this.walletApi) {
             throw new Error('Wallet not initialized');
         }
-        const addresses = await this.wallet.getUsedAddresses();
+        const addresses = await this.walletApi.getUsedAddresses();
         return addresses[0] || '';
     }
 
@@ -54,9 +62,9 @@ export class CardanoPaymentContract {
     async createPayment(
         recipientAddress: string,
         amountInAda: number,
-        metadata: string = ''
+        _metadata: string = ''
     ): Promise<{ paymentId: number; txHash: string }> {
-        if (!this.wallet) {
+        if (!this.walletApi) {
             throw new Error('Wallet not initialized. Call initialize() first.');
         }
 
@@ -84,18 +92,19 @@ export class CardanoPaymentContract {
 
             // Sign with wallet
             const unsignedTx = txBuilder.txHex;
-            const signedTx = await this.wallet.signTx(unsignedTx);
+            const signedTx = await this.walletApi.signTx(unsignedTx);
 
             // Submit transaction
-            const txHash = await this.provider.submitTx(signedTx);
+            const txHash = await this.walletApi.submitTx(signedTx);
 
             return {
                 paymentId,
                 txHash,
             };
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to create Cardano payment';
             console.error('Cardano payment creation error:', error);
-            throw new Error(error.message || 'Failed to create Cardano payment');
+            throw new Error(errorMessage);
         }
     }
 
@@ -142,14 +151,26 @@ export class CardanoPaymentContract {
      * Get wallet balance in ADA
      */
     async getBalance(): Promise<number> {
-        if (!this.wallet) {
+        if (!this.walletApi) {
             throw new Error('Wallet not initialized');
         }
 
         try {
-            const balance = await this.wallet.getBalance();
-            const lovelaceAmount = balance.find((b: { unit: string; quantity: string }) => b.unit === 'lovelace');
-            return lovelaceAmount ? Number(lovelaceAmount.quantity) / 1_000_000 : 0;
+            const balanceHex = await this.walletApi.getBalance();
+            // Balance is returned as CBOR hex, parse the lovelace value
+            // For simplicity, we'll use the provider to get balance
+            const address = await this.getWalletAddress();
+            const utxos = await this.provider.fetchAddressUTxOs(address);
+
+            let totalLovelace = 0;
+            for (const utxo of utxos) {
+                const lovelace = utxo.output.amount.find((a: { unit: string; quantity: string }) => a.unit === 'lovelace');
+                if (lovelace) {
+                    totalLovelace += Number(lovelace.quantity);
+                }
+            }
+
+            return totalLovelace / 1_000_000;
         } catch (error) {
             console.error('Get balance error:', error);
             return 0;
@@ -159,7 +180,7 @@ export class CardanoPaymentContract {
     /**
      * Estimate transaction fee
      */
-    async estimateFee(amountInAda: number): Promise<number> {
+    async estimateFee(_amountInAda: number): Promise<number> {
         // Rough estimate: 0.17 ADA for standard transaction
         // Actual fee depends on transaction size and network conditions
         return 0.17;
