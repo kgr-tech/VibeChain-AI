@@ -168,11 +168,3 @@ export function useWallet() {
     }
     return context;
 }
-
-// Type declarations for window.ethereum and window.cardano
-declare global {
-    interface Window {
-        ethereum?: any;
-        cardano: any;
-    }
-}
