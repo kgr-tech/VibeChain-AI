@@ -1,4 +1,6 @@
-import { BlockfrostProvider, Transaction, Lucid, fromText, Data } from '@meshsdk/core';
+'use client';
+
+import { BlockfrostProvider, MeshWallet, MeshTxBuilder, serializePlutusScript } from '@meshsdk/core';
 
 // Cardano network configuration
 const CARDANO_NETWORK = process.env.NEXT_PUBLIC_CARDANO_NETWORK || 'preprod';
@@ -19,69 +21,77 @@ export interface CardanoPaymentData {
 }
 
 export class CardanoPaymentContract {
-    private lucid: Lucid | null = null;
+    private wallet: MeshWallet | null = null;
     private provider: BlockfrostProvider;
 
     constructor() {
-        this.provider = new BlockfrostProvider(BLOCKFROST_API_KEY);
+        this.provider = new BlockfrostProvider(
+            CARDANO_NETWORK === 'mainnet'
+                ? `https://cardano-mainnet.blockfrost.io/api/v0`
+                : `https://cardano-preprod.blockfrost.io/api/v0`,
+            BLOCKFROST_API_KEY
+        );
     }
 
     /**
-     * Initialize Lucid with wallet
+     * Initialize wallet with browser wallet API
      */
     async initialize(walletApi: any): Promise<void> {
-        this.lucid = await Lucid.new(this.provider, CARDANO_NETWORK as any);
-        this.lucid.selectWallet(walletApi);
+        // Store the wallet API for later use
+        this.wallet = await MeshWallet.enable(walletApi);
     }
 
     /**
-     * Create a new payment on Cardano
+     * Get connected wallet address
+     */
+    async getWalletAddress(): Promise<string> {
+        if (!this.wallet) {
+            throw new Error('Wallet not initialized');
+        }
+        const addresses = await this.wallet.getUsedAddresses();
+        return addresses[0] || '';
+    }
+
+    /**
+     * Create a new payment on Cardano (simple transfer)
      */
     async createPayment(
         recipientAddress: string,
         amountInAda: number,
         metadata: string = ''
     ): Promise<{ paymentId: number; txHash: string }> {
-        if (!this.lucid) {
-            throw new Error('Lucid not initialized. Call initialize() first.');
+        if (!this.wallet) {
+            throw new Error('Wallet not initialized. Call initialize() first.');
         }
 
         try {
-            const amountLovelace = BigInt(Math.floor(amountInAda * 1_000_000));
+            const amountLovelace = Math.floor(amountInAda * 1_000_000).toString();
 
             // Generate payment ID (timestamp-based)
             const paymentId = Date.now();
-            const timestamp = Math.floor(Date.now() / 1000);
 
-            // Get sender address
-            const senderAddress = await this.lucid.wallet.address();
-
-            // Create payment datum
-            const datum = Data.to({
-                payment_id: BigInt(paymentId),
-                sender: senderAddress,
-                recipient: recipientAddress,
-                amount: amountLovelace,
-                timestamp: BigInt(timestamp),
-                metadata: fromText(metadata),
-                completed: false,
+            // Build transaction using MeshTxBuilder
+            const txBuilder = new MeshTxBuilder({
+                fetcher: this.provider,
+                submitter: this.provider,
             });
 
-            // Build transaction
-            const tx = await this.lucid
-                .newTx()
-                .payToContract(
-                    CARDANO_PAYMENT_CONTRACT_ADDRESS,
-                    { inline: datum },
-                    { lovelace: amountLovelace }
-                )
+            const senderAddress = await this.getWalletAddress();
+            const utxos = await this.provider.fetchAddressUTxOs(senderAddress);
+
+            // Build the transaction
+            await txBuilder
+                .txOut(recipientAddress, [{ unit: 'lovelace', quantity: amountLovelace }])
+                .changeAddress(senderAddress)
+                .selectUtxosFrom(utxos)
                 .complete();
 
-            // Sign transaction
-            const signedTx = await tx.sign().complete();
+            // Sign with wallet
+            const unsignedTx = txBuilder.txHex;
+            const signedTx = await this.wallet.signTx(unsignedTx);
 
             // Submit transaction
-            const txHash = await signedTx.submit();
+            const txHash = await this.provider.submitTx(signedTx);
 
             return {
                 paymentId,
@@ -94,34 +104,36 @@ export class CardanoPaymentContract {
     }
 
     /**
-     * Get payment details from UTxO
+     * Get transaction details (simplified - returns basic info)
      */
-    async getPayment(txHash: string, outputIndex: number = 0): Promise<CardanoPaymentData | null> {
-        if (!this.lucid) {
-            throw new Error('Lucid not initialized');
-        }
-
+    async getPayment(txHash: string): Promise<CardanoPaymentData | null> {
         try {
-            const utxos = await this.lucid.utxosAt(CARDANO_PAYMENT_CONTRACT_ADDRESS);
-
-            const targetUtxo = utxos.find(
-                utxo => utxo.txHash === txHash && utxo.outputIndex === outputIndex
+            // Blockfrost API to get transaction details
+            const response = await fetch(
+                `${CARDANO_NETWORK === 'mainnet'
+                    ? 'https://cardano-mainnet.blockfrost.io/api/v0'
+                    : 'https://cardano-preprod.blockfrost.io/api/v0'}/txs/${txHash}`,
+                {
+                    headers: {
+                        'project_id': BLOCKFROST_API_KEY
+                    }
+                }
             );
 
-            if (!targetUtxo || !targetUtxo.datum) {
+            if (!response.ok) {
                 return null;
             }
 
-            const datum = Data.from(targetUtxo.datum);
+            const txData = await response.json();
 
             return {
-                paymentId: Number(datum.payment_id),
-                sender: datum.sender,
-                recipient: datum.recipient,
-                amount: Number(datum.amount) / 1_000_000, // Convert lovelace to ADA
-                timestamp: Number(datum.timestamp),
-                metadata: datum.metadata,
-                completed: datum.completed,
+                paymentId: 0, // Not available from chain
+                sender: '', // Would need to parse inputs
+                recipient: '', // Would need to parse outputs
+                amount: 0, // Would need to parse outputs
+                timestamp: txData.block_time || 0,
+                metadata: '',
+                completed: true,
                 txHash,
             };
         } catch (error) {
@@ -131,85 +143,20 @@ export class CardanoPaymentContract {
     }
 
     /**
-     * Get all payments for a user
+     * Get wallet balance in ADA
      */
-    async getUserPayments(userAddress: string): Promise<CardanoPaymentData[]> {
-        if (!this.lucid) {
-            throw new Error('Lucid not initialized');
+    async getBalance(): Promise<number> {
+        if (!this.wallet) {
+            throw new Error('Wallet not initialized');
         }
 
         try {
-            const utxos = await this.lucid.utxosAt(CARDANO_PAYMENT_CONTRACT_ADDRESS);
-            const payments: CardanoPaymentData[] = [];
-
-            for (const utxo of utxos) {
-                if (!utxo.datum) continue;
-
-                const datum = Data.from(utxo.datum);
-
-                // Check if user is sender or recipient
-                if (datum.sender === userAddress || datum.recipient === userAddress) {
-                    payments.push({
-                        paymentId: Number(datum.payment_id),
-                        sender: datum.sender,
-                        recipient: datum.recipient,
-                        amount: Number(datum.amount) / 1_000_000,
-                        timestamp: Number(datum.timestamp),
-                        metadata: datum.metadata,
-                        completed: datum.completed,
-                        txHash: utxo.txHash,
-                    });
-                }
-            }
-
-            return payments.sort((a, b) => b.timestamp - a.timestamp);
+            const balance = await this.wallet.getBalance();
+            const lovelaceAmount = balance.find(b => b.unit === 'lovelace');
+            return lovelaceAmount ? Number(lovelaceAmount.quantity) / 1_000_000 : 0;
         } catch (error) {
-            console.error('Get user Cardano payments error:', error);
-            return [];
-        }
-    }
-
-    /**
-     * Complete a payment (mark as completed)
-     */
-    async completePayment(txHash: string, outputIndex: number = 0): Promise<string> {
-        if (!this.lucid) {
-            throw new Error('Lucid not initialized');
-        }
-
-        try {
-            const utxos = await this.lucid.utxosAt(CARDANO_PAYMENT_CONTRACT_ADDRESS);
-
-            const targetUtxo = utxos.find(
-                utxo => utxo.txHash === txHash && utxo.outputIndex === outputIndex
-            );
-
-            if (!targetUtxo) {
-                throw new Error('Payment UTxO not found');
-            }
-
-            const datum = Data.from(targetUtxo.datum!);
-
-            // Create redeemer for completion
-            const redeemer = Data.to({
-                CompletePayment: {
-                    payment_id: datum.payment_id,
-                },
-            });
-
-            // Build completion transaction
-            const tx = await this.lucid
-                .newTx()
-                .collectFrom([targetUtxo], redeemer)
-                .complete();
-
-            const signedTx = await tx.sign().complete();
-            const completionTxHash = await signedTx.submit();
-
-            return completionTxHash;
-        } catch (error: any) {
-            console.error('Complete Cardano payment error:', error);
-            throw new Error(error.message || 'Failed to complete payment');
+            console.error('Get balance error:', error);
+            return 0;
         }
     }
 
@@ -217,18 +164,9 @@ export class CardanoPaymentContract {
      * Estimate transaction fee
      */
     async estimateFee(amountInAda: number): Promise<number> {
-        if (!this.lucid) {
-            throw new Error('Lucid not initialized');
-        }
-
-        try {
-            // Rough estimate: 0.17 ADA for standard transaction
-            // Actual fee depends on transaction size and network conditions
-            return 0.17;
-        } catch (error) {
-            console.error('Fee estimation error:', error);
-            return 0.17; // Default estimate
-        }
+        // Rough estimate: 0.17 ADA for standard transaction
+        // Actual fee depends on transaction size and network conditions
+        return 0.17;
     }
 }
 
