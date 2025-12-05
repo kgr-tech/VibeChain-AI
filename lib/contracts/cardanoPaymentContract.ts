@@ -1,6 +1,6 @@
 'use client';
 
-import { BlockfrostProvider, MeshWallet, MeshTxBuilder, serializePlutusScript } from '@meshsdk/core';
+import { BlockfrostProvider, MeshWallet, MeshTxBuilder } from '@meshsdk/core';
 
 // Cardano network configuration
 const CARDANO_NETWORK = process.env.NEXT_PUBLIC_CARDANO_NETWORK || 'preprod';
@@ -25,12 +25,8 @@ export class CardanoPaymentContract {
     private provider: BlockfrostProvider;
 
     constructor() {
-        this.provider = new BlockfrostProvider(
-            CARDANO_NETWORK === 'mainnet'
-                ? `https://cardano-mainnet.blockfrost.io/api/v0`
-                : `https://cardano-preprod.blockfrost.io/api/v0`,
-            BLOCKFROST_API_KEY
-        );
+        // BlockfrostProvider only takes the API key - network is determined by the key prefix
+        this.provider = new BlockfrostProvider(BLOCKFROST_API_KEY);
     }
 
     /**
@@ -152,7 +148,7 @@ export class CardanoPaymentContract {
 
         try {
             const balance = await this.wallet.getBalance();
-            const lovelaceAmount = balance.find(b => b.unit === 'lovelace');
+            const lovelaceAmount = balance.find((b: { unit: string; quantity: string }) => b.unit === 'lovelace');
             return lovelaceAmount ? Number(lovelaceAmount.quantity) / 1_000_000 : 0;
         } catch (error) {
             console.error('Get balance error:', error);
