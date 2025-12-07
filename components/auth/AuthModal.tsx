@@ -4,7 +4,6 @@ import { useState } from 'react'
 import {
     Dialog,
     DialogContent,
-    Box,
     Tabs,
     Tab,
     IconButton,
@@ -49,16 +48,16 @@ export function AuthModal({ open, onClose, defaultTab = 'signin' }: AuthModalPro
             </IconButton>
 
             <DialogContent sx={{ p: 4 }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+                <div style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.12)', marginBottom: '24px' }}>
                     <Tabs
                         value={tab}
-                        onChange={(_, newValue) => setTab(newValue)}
+                        onChange={(_: React.SyntheticEvent, newValue: string) => setTab(newValue as "signin" | "signup")}
                         centered
                     >
                         <Tab label="Sign In" value="signin" />
                         <Tab label="Sign Up" value="signup" />
                     </Tabs>
-                </Box>
+                </div>
 
                 {tab === 'signin' ? (
                     <SignInForm onSuccess={onClose} />

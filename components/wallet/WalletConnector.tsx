@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-    Box,
     Button,
     Dialog,
     DialogTitle,
@@ -87,12 +86,12 @@ export default function WalletConnector() {
             >
                 <CardContent sx={{ py: 1.5, px: 2 }}>
                     <Stack direction="row" spacing={2} alignItems="center">
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <CheckCircle sx={{ color: 'success.main', fontSize: 20 }} />
                             <Typography variant="body2" fontWeight={600}>
                                 {truncateAddress(address)}
                             </Typography>
-                        </Box>
+                        </div>
 
                         {walletType === 'metamask' && chainId && (
                             <Chip
@@ -139,19 +138,25 @@ export default function WalletConnector() {
         <>
             <Button
                 variant="contained"
-                startIcon={<AccountBalanceWallet />}
+                startIcon={<AccountBalanceWallet sx={{ color: '#3b82f6' }} />}
                 onClick={handleOpen}
                 disabled={isConnecting}
                 sx={{
-                    background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                    '&:hover': {
-                        background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-                    },
-                    fontWeight: 600,
+                    backgroundColor: 'white',
+                    color: '#3b82f6',
+                    borderRadius: '50px',
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
                     px: 3,
+                    py: 1,
+                    boxShadow: '0 4px 14px 0 rgba(0, 118, 255, 0.39)',
+                    '&:hover': {
+                        backgroundColor: '#f8fafc',
+                        boxShadow: '0 6px 20px rgba(0, 118, 255, 0.23)',
+                    },
                 }}
             >
-                {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+                {isConnecting ? 'CONNECTING...' : 'ONBOARD'}
             </Button>
 
             <Dialog
@@ -195,11 +200,11 @@ export default function WalletConnector() {
                         >
                             <CardContent>
                                 <Stack direction="row" spacing={2} alignItems="center">
-                                    <Box
-                                        sx={{
+                                    <div
+                                        style={{
                                             width: 56,
                                             height: 56,
-                                            borderRadius: 2,
+                                            borderRadius: 8,
                                             background: 'linear-gradient(135deg, #f6851b 0%, #e2761b 100%)',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -208,15 +213,15 @@ export default function WalletConnector() {
                                         }}
                                     >
                                         🦊
-                                    </Box>
-                                    <Box sx={{ flex: 1 }}>
+                                    </div>
+                                    <div style={{ flex: 1 }}>
                                         <Typography variant="h6" fontWeight={700}>
                                             MetaMask
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             Connect to Ethereum & EVM chains
                                         </Typography>
-                                    </Box>
+                                    </div>
                                     <Chip label="Popular" color="primary" size="small" />
                                 </Stack>
                             </CardContent>
@@ -239,11 +244,11 @@ export default function WalletConnector() {
                         >
                             <CardContent>
                                 <Stack direction="row" spacing={2} alignItems="center">
-                                    <Box
-                                        sx={{
+                                    <div
+                                        style={{
                                             width: 56,
                                             height: 56,
-                                            borderRadius: 2,
+                                            borderRadius: 8,
                                             background: 'linear-gradient(135deg, #0033AD 0%, #1E88E5 100%)',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -252,15 +257,15 @@ export default function WalletConnector() {
                                         }}
                                     >
                                         ₳
-                                    </Box>
-                                    <Box sx={{ flex: 1 }}>
+                                    </div>
+                                    <div style={{ flex: 1 }}>
                                         <Typography variant="h6" fontWeight={700}>
                                             Cardano Wallet
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             Eternal, Nami, Flint & more
                                         </Typography>
-                                    </Box>
+                                    </div>
                                 </Stack>
                             </CardContent>
                         </Card>

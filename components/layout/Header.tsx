@@ -39,38 +39,35 @@ function UserMenu() {
 
     return (
         <>
-            <Box
+            <div
                 onClick={handleClick}
-                sx={{
+                style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1.5,
-                    pl: 2,
+                    gap: '12px',
+                    paddingLeft: '16px',
                     borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
                     cursor: 'pointer',
-                    '&:hover': {
-                        opacity: 0.8,
-                    },
                 }}
             >
                 <Avatar
                     sx={{
                         width: 32,
                         height: 32,
-                        background: (theme) => `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+                        background: (theme: any) => `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
                     }}
                 >
                     <Person />
                 </Avatar>
-                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <div style={{ display: 'block' }}>
                     <Typography variant="body2" fontWeight={500}>
                         {user?.email?.split('@')[0] || 'User'}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
                         {user?.email || ''}
                     </Typography>
-                </Box>
-            </Box>
+                </div>
+            </div>
 
             <Menu
                 anchorEl={anchorEl}
@@ -104,26 +101,23 @@ export function Header() {
             position="static"
             elevation={0}
             sx={{
-                bgcolor: (theme) => alpha(theme.palette.background.paper, 0.5),
+                bgcolor: (theme: any) => alpha(theme.palette.background.paper, 0.5),
                 backdropFilter: 'blur(12px)',
                 borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             }}
         >
             <Toolbar>
-                <Box
-                    sx={{
+                <div
+                    style={{
                         position: 'relative',
-                        borderRadius: 1,
-                        backgroundColor: alpha('#fff', 0.05),
-                        '&:hover': {
-                            backgroundColor: alpha('#fff', 0.08),
-                        },
-                        ml: 0,
-                        width: { sm: 'auto', md: '300px' },
+                        borderRadius: '4px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                        marginLeft: 0,
+                        width: '300px',
                     }}
                 >
-                    <Box
-                        sx={{
+                    <div
+                        style={{
                             padding: '0 16px',
                             height: '100%',
                             position: 'absolute',
@@ -134,7 +128,7 @@ export function Header() {
                         }}
                     >
                         <Search sx={{ color: 'text.secondary' }} />
-                    </Box>
+                    </div>
                     <InputBase
                         placeholder="Search transactions..."
                         sx={{
@@ -145,11 +139,11 @@ export function Header() {
                             width: '100%',
                         }}
                     />
-                </Box>
+                </div>
 
-                <Box sx={{ flexGrow: 1 }} />
+                <div style={{ flex: 1 }} />
 
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <WalletConnector />
 
                     <IconButton color="inherit">
@@ -159,7 +153,7 @@ export function Header() {
                     </IconButton>
 
                     <UserMenu />
-                </Box>
+                </div>
             </Toolbar>
         </AppBar>
     );

@@ -1,11 +1,13 @@
-import { Box, Typography, Grid, Paper } from '@mui/material';
+import { Typography, Grid, Paper } from '@mui/material';
 import { StatusWidget } from "@/components/dashboard/StatusWidget";
 import { OverviewChart } from "@/components/dashboard/OverviewChart";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 
+export const dynamic = 'force-dynamic';
+
 export default function DashboardPage() {
     return (
-        <Box>
+        <div>
             <Typography variant="h4" fontWeight="bold" gutterBottom>
                 Dashboard
             </Typography>
@@ -104,6 +106,6 @@ export default function DashboardPage() {
                     <RecentActivity />
                 </Grid>
             </Grid>
-        </Box>
+        </div>
     );
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, Button, Container } from '@mui/material'
+import { Typography, Button, Container } from '@mui/material'
 import { Rocket, TrendingUp } from '@mui/icons-material'
 
 interface HeroSectionProps {
@@ -10,8 +10,8 @@ interface HeroSectionProps {
 
 export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) {
     return (
-        <Box
-            sx={{
+        <div
+            style={{
                 minHeight: '100vh',
                 display: 'flex',
                 alignItems: 'center',
@@ -21,8 +21,8 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
             }}
         >
             {/* Animated background elements */}
-            <Box
-                sx={{
+            <div
+                style={{
                     position: 'absolute',
                     top: '20%',
                     right: '10%',
@@ -32,14 +32,10 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                     background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
                     filter: 'blur(60px)',
                     animation: 'float 6s ease-in-out infinite',
-                    '@keyframes float': {
-                        '0%, 100%': { transform: 'translateY(0px)' },
-                        '50%': { transform: 'translateY(-30px)' },
-                    },
                 }}
             />
-            <Box
-                sx={{
+            <div
+                style={{
                     position: 'absolute',
                     bottom: '10%',
                     left: '5%',
@@ -53,15 +49,14 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
             />
 
             <Container maxWidth="lg">
-                <Box sx={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
-                    <Box
-                        sx={{
+                <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+                    <div
+                        style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: 1,
-                            px: 3,
-                            py: 1,
-                            mb: 4,
+                            gap: '8px',
+                            padding: '8px 24px',
+                            marginBottom: '32px',
                             borderRadius: 50,
                             background: 'rgba(59, 130, 246, 0.1)',
                             border: '1px solid rgba(59, 130, 246, 0.3)',
@@ -72,7 +67,7 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                         <Typography variant="body2" sx={{ color: '#3b82f6', fontWeight: 600 }}>
                             Next-Gen Financial Dashboard
                         </Typography>
-                    </Box>
+                    </div>
 
                     <Typography
                         variant="h1"
@@ -103,7 +98,7 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                         Revolutionize your blockchain financial management with AI-powered insights and real-time analytics
                     </Typography>
 
-                    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
                         <Button
                             variant="contained"
                             size="large"
@@ -149,14 +144,14 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                         >
                             Sign In
                         </Button>
-                    </Box>
+                    </div>
 
-                    <Box
-                        sx={{
-                            mt: 8,
+                    <div
+                        style={{
+                            marginTop: '64px',
                             display: 'flex',
                             justifyContent: 'center',
-                            gap: 6,
+                            gap: '48px',
                             flexWrap: 'wrap',
                         }}
                     >
@@ -165,7 +160,7 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                             { value: '10K+', label: 'Active Users' },
                             { value: '99.9%', label: 'Uptime' },
                         ].map((stat, index) => (
-                            <Box key={index} sx={{ textAlign: 'center' }}>
+                            <div key={index} style={{ textAlign: 'center' }}>
                                 <Typography
                                     variant="h3"
                                     sx={{
@@ -181,11 +176,11 @@ export function HeroSection({ onSignInClick, onSignUpClick }: HeroSectionProps) 
                                 <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.6)', mt: 1 }}>
                                     {stat.label}
                                 </Typography>
-                            </Box>
+                            </div>
                         ))}
-                    </Box>
-                </Box>
+                    </div>
+                </div>
             </Container>
-        </Box>
+        </div>
     )
 }

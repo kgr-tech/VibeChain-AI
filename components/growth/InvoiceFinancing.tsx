@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Button, Chip } from '@mui/material';
+import { Paper, Typography, Button, Chip } from '@mui/material';
 import { Description, Bolt } from '@mui/icons-material';
 
 export function InvoiceFinancing() {
@@ -9,29 +9,29 @@ export function InvoiceFinancing() {
                 background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%)',
             }}
         >
-            <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <div style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     <Description sx={{ color: '#6366f1' }} />
                     <Typography variant="h6" fontWeight="bold">
                         Invoice Financing
                     </Typography>
-                </Box>
+                </div>
                 <Typography variant="body2" color="text.secondary">
                     Get instant liquidity on unpaid invoices.
                 </Typography>
-            </Box>
+            </div>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <Paper sx={{ p: 2, bgcolor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                        <Box>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                        <div>
                             <Typography variant="body2" fontWeight={500}>
                                 Invoice #INV-2024-001
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
                                 Client: MegaCorp Ltd.
                             </Typography>
-                        </Box>
+                        </div>
                         <Chip
                             label="Unpaid"
                             size="small"
@@ -41,17 +41,17 @@ export function InvoiceFinancing() {
                                 border: '1px solid rgba(245, 158, 11, 0.3)',
                             }}
                         />
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                        <Box>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+                        <div>
                             <Typography variant="caption" color="text.secondary">Due Date</Typography>
                             <Typography variant="body2">Dec 15, 2025</Typography>
-                        </Box>
-                        <Box sx={{ textAlign: 'right' }}>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
                             <Typography variant="caption" color="text.secondary">Amount</Typography>
                             <Typography variant="h6" fontWeight="bold">$15,000.00</Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                     <Button
                         fullWidth
                         variant="contained"
@@ -67,15 +67,15 @@ export function InvoiceFinancing() {
                 </Paper>
 
                 <Paper sx={{ p: 2, bgcolor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.1)', opacity: 0.75 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                        <Box>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                        <div>
                             <Typography variant="body2" fontWeight={500}>
                                 Invoice #INV-2024-002
                             </Typography>
                             <Typography variant="caption" color="text.secondary">
                                 Client: StartUp Inc.
                             </Typography>
-                        </Box>
+                        </div>
                         <Chip
                             label="Unpaid"
                             size="small"
@@ -85,17 +85,17 @@ export function InvoiceFinancing() {
                                 border: '1px solid rgba(245, 158, 11, 0.3)',
                             }}
                         />
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-                        <Box>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px' }}>
+                        <div>
                             <Typography variant="caption" color="text.secondary">Due Date</Typography>
                             <Typography variant="body2">Dec 20, 2025</Typography>
-                        </Box>
-                        <Box sx={{ textAlign: 'right' }}>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
                             <Typography variant="caption" color="text.secondary">Amount</Typography>
                             <Typography variant="h6" fontWeight="bold">$4,500.00</Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                     <Button
                         fullWidth
                         variant="outlined"
@@ -112,7 +112,7 @@ export function InvoiceFinancing() {
                         Get Advance ($4,275)
                     </Button>
                 </Paper>
-            </Box>
+            </div>
         </Paper>
     );
 }

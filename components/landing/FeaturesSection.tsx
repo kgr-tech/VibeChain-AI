@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, Container, Grid, Paper } from '@mui/material'
+import { Typography, Container, Grid, Paper } from '@mui/material'
 import {
     AccountBalance,
     TrendingUp,
@@ -51,14 +51,15 @@ const features = [
 
 export function FeaturesSection() {
     return (
-        <Box
-            sx={{
-                py: 12,
+        <div
+            style={{
+                paddingTop: '96px',
+                paddingBottom: '96px',
                 background: 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)',
             }}
         >
             <Container maxWidth="lg">
-                <Box sx={{ textAlign: 'center', mb: 8 }}>
+                <div style={{ textAlign: 'center', marginBottom: '64px' }}>
                     <Typography
                         variant="h2"
                         sx={{
@@ -83,7 +84,7 @@ export function FeaturesSection() {
                     >
                         Everything you need to manage your blockchain finances in one place
                     </Typography>
-                </Box>
+                </div>
 
                 <Grid container spacing={4}>
                     {features.map((feature, index) => {
@@ -107,20 +108,20 @@ export function FeaturesSection() {
                                         },
                                     }}
                                 >
-                                    <Box
-                                        sx={{
+                                    <div
+                                        style={{
                                             width: 60,
                                             height: 60,
-                                            borderRadius: 2,
+                                            borderRadius: 8,
                                             background: feature.gradient,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            mb: 3,
+                                            marginBottom: '24px',
                                         }}
                                     >
                                         <Icon sx={{ fontSize: 32, color: 'white' }} />
-                                    </Box>
+                                    </div>
 
                                     <Typography variant="h6" fontWeight="bold" gutterBottom>
                                         {feature.title}
@@ -135,6 +136,6 @@ export function FeaturesSection() {
                     })}
                 </Grid>
             </Container>
-        </Box>
+        </div>
     )
 }

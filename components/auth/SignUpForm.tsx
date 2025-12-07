@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import {
-    Box,
     TextField,
     Button,
     Typography,
@@ -60,19 +59,19 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
 
     if (success) {
         return (
-            <Box sx={{ textAlign: 'center', py: 4 }}>
+            <div style={{ textAlign: 'center', padding: '32px 0' }}>
                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                     Account Created! 🎉
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Redirecting to your dashboard...
                 </Typography>
-            </Box>
+            </div>
         )
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
                 Create Account
             </Typography>
@@ -166,6 +165,6 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
             >
                 {loading ? <CircularProgress size={24} /> : 'Create Account'}
             </Button>
-        </Box>
+        </form>
     )
 }

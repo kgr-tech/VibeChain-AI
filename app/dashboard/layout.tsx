@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Box from '@mui/material/Box';
+
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 
@@ -14,14 +14,14 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <div style={{ display: 'flex', minHeight: '100vh' }}>
             <Sidebar />
-            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <Header />
-                <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: 'background.default' }}>
+                <main style={{ flex: 1, padding: '24px', backgroundColor: '#0f172a' }}>
                     {children}
-                </Box>
-            </Box>
-        </Box>
+                </main>
+            </div>
+        </div>
     );
 }

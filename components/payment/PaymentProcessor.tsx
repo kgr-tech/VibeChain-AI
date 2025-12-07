@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-    Box,
     Card,
     CardContent,
     TextField,
@@ -207,42 +206,42 @@ export default function PaymentProcessor() {
                 <DialogTitle>Confirm Payment</DialogTitle>
                 <DialogContent>
                     <Stack spacing={2} sx={{ mt: 1 }}>
-                        <Box>
+                        <div>
                             <Typography variant="body2" color="text.secondary">
                                 Recipient
                             </Typography>
                             <Typography variant="body1" fontWeight={600} sx={{ wordBreak: 'break-all' }}>
                                 {recipient}
                             </Typography>
-                        </Box>
+                        </div>
 
-                        <Box>
+                        <div>
                             <Typography variant="body2" color="text.secondary">
                                 Amount
                             </Typography>
                             <Typography variant="h6" fontWeight={700} color="primary">
                                 {amount} ETH
                             </Typography>
-                        </Box>
+                        </div>
 
                         {gasEstimate && (
-                            <Box>
+                            <div>
                                 <Typography variant="body2" color="text.secondary">
                                     Estimated Gas Fee
                                 </Typography>
                                 <Typography variant="body1">
                                     ~{parseFloat(gasEstimate).toFixed(6)} ETH
                                 </Typography>
-                            </Box>
+                            </div>
                         )}
 
                         {note && (
-                            <Box>
+                            <div>
                                 <Typography variant="body2" color="text.secondary">
                                     Note
                                 </Typography>
                                 <Typography variant="body1">{note}</Typography>
-                            </Box>
+                            </div>
                         )}
 
                         <Alert severity="info">

@@ -12,7 +12,6 @@ import {
     Payment,
 } from "@mui/icons-material";
 import {
-    Box,
     Drawer,
     List,
     ListItem,
@@ -82,8 +81,8 @@ export function Sidebar() {
                 },
             }}
         >
-            <Box sx={{ p: 3, mb: 2 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <div style={{ padding: '24px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <Avatar
                         sx={{
                             width: 32,
@@ -107,8 +106,8 @@ export function Sidebar() {
                     >
                         Vibechain
                     </Typography>
-                </Box>
-            </Box>
+                </div>
+            </div>
 
             <List sx={{ px: 2 }}>
                 {routes.map((route) => {
@@ -147,7 +146,7 @@ export function Sidebar() {
                 })}
             </List>
 
-            <Box sx={{ mt: 'auto', p: 2 }}>
+            <div style={{ marginTop: 'auto', padding: '16px' }}>
                 <Paper
                     sx={{
                         p: 2,
@@ -165,7 +164,7 @@ export function Sidebar() {
                         <TrendingUp sx={{ fontSize: 14 }} /> +2.4%
                     </Typography>
                 </Paper>
-            </Box>
+            </div>
         </Drawer>
     );
 }

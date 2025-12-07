@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Typography, Box } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const data = [
@@ -19,7 +19,7 @@ export function OverviewChart() {
             <Typography variant="h6" gutterBottom>
                 Treasury Growth
             </Typography>
-            <Box sx={{ height: 300, mt: 2 }}>
+            <div style={{ height: 300, marginTop: '16px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data}>
                         <defs>
@@ -55,7 +55,7 @@ export function OverviewChart() {
                         />
                     </AreaChart>
                 </ResponsiveContainer>
-            </Box>
+            </div>
         </Paper>
     );
 }

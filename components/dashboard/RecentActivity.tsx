@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, IconButton } from '@mui/material';
+import { Paper, Typography, IconButton } from '@mui/material';
 import { ArrowUpward, ArrowDownward, MoreHoriz } from '@mui/icons-material';
 
 const transactions = [
@@ -39,37 +39,32 @@ const transactions = [
 export function RecentActivity() {
     return (
         <Paper sx={{ p: 3, height: '100%' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                 <Typography variant="h6">Recent Activity</Typography>
                 <IconButton size="small">
                     <MoreHoriz />
                 </IconButton>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {transactions.map((tx) => (
-                    <Box
+                    <div
                         key={tx.id}
-                        sx={{
+                        style={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            '&:hover': {
-                                '& .MuiTypography-root': {
-                                    color: 'primary.main',
-                                },
-                            },
                         }}
                     >
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                            <Box
-                                sx={{
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                            <div
+                                style={{
                                     width: 40,
                                     height: 40,
                                     borderRadius: '50%',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    bgcolor: tx.type === 'incoming' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                                    backgroundColor: tx.type === 'incoming' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
                                 }}
                             >
                                 {tx.type === 'incoming' ? (
@@ -77,17 +72,17 @@ export function RecentActivity() {
                                 ) : (
                                     <ArrowUpward sx={{ fontSize: 20, color: '#ef4444' }} />
                                 )}
-                            </Box>
-                            <Box>
+                            </div>
+                            <div>
                                 <Typography variant="body2" fontWeight={500}>
                                     {tx.name}
                                 </Typography>
                                 <Typography variant="caption" color="text.secondary">
                                     {tx.date}
                                 </Typography>
-                            </Box>
-                        </Box>
-                        <Box sx={{ textAlign: 'right' }}>
+                            </div>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
                             <Typography
                                 variant="body2"
                                 fontWeight={500}
@@ -98,10 +93,10 @@ export function RecentActivity() {
                             <Typography variant="caption" color="text.secondary">
                                 {tx.status}
                             </Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                 ))}
-            </Box>
+            </div>
         </Paper>
     );
 }

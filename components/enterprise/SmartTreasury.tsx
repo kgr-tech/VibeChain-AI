@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Typography, Box, Grid } from '@mui/material';
+import { Paper, Typography, Grid } from '@mui/material';
 import { LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 import { TrendingUp, Security } from '@mui/icons-material';
 
@@ -22,17 +22,17 @@ export function SmartTreasury() {
                 background: 'linear-gradient(to bottom right, #111827, #000)',
             }}
         >
-            <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <div style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     <TrendingUp sx={{ color: '#a855f7' }} />
                     <Typography variant="h6" fontWeight="bold">
                         Smart Treasury
                     </Typography>
-                </Box>
+                </div>
                 <Typography variant="body2" color="text.secondary">
                     Auto-hedge volatility and earn yield.
                 </Typography>
-            </Box>
+            </div>
 
             <Grid container spacing={2} sx={{ mb: 3 }}>
                 <Grid item xs={6}>
@@ -53,7 +53,7 @@ export function SmartTreasury() {
                 </Grid>
             </Grid>
 
-            <Box sx={{ height: 150, mb: 2 }}>
+            <div style={{ height: 150, marginBottom: '16px' }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={data}>
                         <Tooltip
@@ -63,23 +63,23 @@ export function SmartTreasury() {
                         <Line type="monotone" dataKey="yield" stroke="#a855f7" strokeWidth={2} dot={false} />
                     </LineChart>
                 </ResponsiveContainer>
-            </Box>
+            </div>
 
-            <Box
-                sx={{
+            <div
+                style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1,
-                    bgcolor: 'rgba(255, 255, 255, 0.05)',
-                    p: 1,
-                    borderRadius: 1,
+                    gap: '8px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    padding: '8px',
+                    borderRadius: '4px',
                 }}
             >
                 <Security sx={{ fontSize: 16, color: '#6b7280' }} />
                 <Typography variant="caption" color="text.secondary">
                     Auto-rebalancing triggered when volatility {'>'}5%
                 </Typography>
-            </Box>
+            </div>
         </Paper>
     );
 }

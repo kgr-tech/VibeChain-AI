@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import {
-    Box,
     TextField,
     Button,
     Typography,
@@ -50,7 +49,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
                 Welcome Back
             </Typography>
@@ -126,6 +125,6 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
             >
                 {loading ? <CircularProgress size={24} /> : 'Sign In'}
             </Button>
-        </Box>
+        </form>
     )
 }

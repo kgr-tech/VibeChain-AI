@@ -2,16 +2,15 @@
 
 import React, { useRef } from 'react';
 import {
-    Box,
+    Tooltip,
     Card,
     CardContent,
     Typography,
     Stack,
     Chip,
-    Button,
     Divider,
     IconButton,
-    Tooltip,
+    Button,
 } from '@mui/material';
 import {
     Download,
@@ -71,7 +70,7 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
     });
 
     return (
-        <Box>
+        <div>
             <Card
                 ref={receiptRef}
                 sx={{
@@ -86,8 +85,8 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                 }}
             >
                 {/* Holographic effect overlay */}
-                <Box
-                    sx={{
+                <div
+                    style={{
                         position: 'absolute',
                         top: 0,
                         left: 0,
@@ -96,18 +95,14 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                         background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 50%, rgba(16, 185, 129, 0.1) 100%)',
                         opacity: 0.3,
                         pointerEvents: 'none',
-                        animation: 'shimmer 3s infinite',
-                        '@keyframes shimmer': {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(100%)' },
-                        },
+                        // Animation would be better handled with CSS class, but inline for now equivalent
                     }}
                 />
 
                 <CardContent sx={{ p: 4, position: 'relative', zIndex: 1 }}>
                     {/* Header */}
                     <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
-                        <Box>
+                        <div>
                             <Typography variant="h4" fontWeight={700} sx={{
                                 background: 'linear-gradient(135deg, #3b82f6 0%, #a855f7 100%)',
                                 backgroundClip: 'text',
@@ -119,7 +114,7 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                             <Typography variant="body2" color="text.secondary">
                                 Smart Contract Payment Receipt
                             </Typography>
-                        </Box>
+                        </div>
                         <Chip
                             icon={<CheckCircle />}
                             label="VERIFIED"
@@ -132,54 +127,54 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
 
                     {/* Payment Details */}
                     <Stack spacing={2.5} sx={{ mb: 3 }}>
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                 Payment ID
                             </Typography>
                             <Typography variant="h6" fontWeight={700}>
                                 #{payment.paymentId}
                             </Typography>
-                        </Box>
+                        </div>
 
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                 Amount
                             </Typography>
                             <Typography variant="h4" fontWeight={700} color="primary">
                                 {payment.amount} ETH
                             </Typography>
-                        </Box>
+                        </div>
 
                         <Stack direction="row" spacing={3}>
-                            <Box sx={{ flex: 1 }}>
+                            <div style={{ flex: 1 }}>
                                 <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                     From
                                 </Typography>
                                 <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-all' }}>
                                     {truncateAddress(payment.from)}
                                 </Typography>
-                            </Box>
-                            <Box sx={{ flex: 1 }}>
+                            </div>
+                            <div style={{ flex: 1 }}>
                                 <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                     To
                                 </Typography>
                                 <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-all' }}>
                                     {truncateAddress(payment.to)}
                                 </Typography>
-                            </Box>
+                            </div>
                         </Stack>
 
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                 Date & Time
                             </Typography>
                             <Typography variant="body2" fontWeight={600}>
                                 {formatDate(payment.timestamp)}
                             </Typography>
-                        </Box>
+                        </div>
 
                         {payment.transactionHash && (
-                            <Box>
+                            <div>
                                 <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1 }}>
                                     Transaction Hash
                                 </Typography>
@@ -197,23 +192,23 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                                         </IconButton>
                                     </Tooltip>
                                 </Stack>
-                            </Box>
+                            </div>
                         )}
                     </Stack>
 
                     <Divider sx={{ my: 3 }} />
 
                     {/* QR Code */}
-                    <Box sx={{ textAlign: 'center', py: 2 }}>
+                    <div style={{ textAlign: 'center', padding: '16px 0' }}>
                         <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 1, mb: 2, display: 'block' }}>
                             Scan to Verify
                         </Typography>
-                        <Box
-                            sx={{
+                        <div
+                            style={{
                                 display: 'inline-block',
-                                p: 2,
+                                padding: '16px',
                                 background: 'white',
-                                borderRadius: 2,
+                                borderRadius: '8px',
                                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                             }}
                         >
@@ -223,11 +218,11 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                                 level="H"
                                 includeMargin={false}
                             />
-                        </Box>
+                        </div>
                         <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
                             This QR code contains verified payment data
                         </Typography>
-                    </Box>
+                    </div>
 
                     <Divider sx={{ my: 3 }} />
 
@@ -272,6 +267,6 @@ export default function SmartContractPaper({ payment }: SmartContractPaperProps)
                     </Button>
                 )}
             </Stack>
-        </Box>
+        </div>
     );
 }

@@ -2,17 +2,19 @@ import { Box, Typography, Grid, Paper, Table, TableBody, TableCell, TableContain
 import { CreditScoreGauge } from "@/components/credit/CreditScoreGauge";
 import { LoanRequestCard } from "@/components/credit/LoanRequestCard";
 
+export const dynamic = 'force-dynamic';
+
 export default function CreditPage() {
     return (
-        <Box>
-            <Box sx={{ mb: 4 }}>
+        <div>
+            <div style={{ marginBottom: '32px' }}>
                 <Typography variant="h4" fontWeight="bold" gutterBottom>
                     Community Credit
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
                     On-chain reputation unlocks access to instant micro-loans.
                 </Typography>
-            </Box>
+            </div>
 
             <Grid container spacing={3}>
                 <Grid item xs={12} lg={4}>
@@ -23,7 +25,7 @@ export default function CreditPage() {
                 </Grid>
             </Grid>
 
-            <Box sx={{ mt: 4 }}>
+            <div style={{ marginTop: '32px' }}>
                 <Typography variant="h6" fontWeight={600} gutterBottom>
                     Loan History
                 </Typography>
@@ -73,7 +75,7 @@ export default function CreditPage() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Box>
-        </Box>
+            </div>
+        </div>
     );
 }

@@ -1,6 +1,7 @@
-import { Box, Typography, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 import { NFTReceiptCard } from "@/components/receipts/NFTReceiptCard";
 
+export const dynamic = 'force-dynamic';
 const receipts = [
     {
         id: "8821",
@@ -33,15 +34,15 @@ const receipts = [
 
 export default function ReceiptsPage() {
     return (
-        <Box>
-            <Box sx={{ mb: 4 }}>
+        <div>
+            <div style={{ marginBottom: '32px' }}>
                 <Typography variant="h4" fontWeight="bold" gutterBottom>
                     NFT Receipts
                 </Typography>
                 <Typography variant="body1" color="text.secondary">
                     Every payment becomes a permanent, verifiable receipt on-chain.
                 </Typography>
-            </Box>
+            </div>
 
             <Grid container spacing={4}>
                 {receipts.map((receipt) => (
@@ -50,6 +51,6 @@ export default function ReceiptsPage() {
                     </Grid>
                 ))}
             </Grid>
-        </Box>
+        </div>
     );
 }

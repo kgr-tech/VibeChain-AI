@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Paper, Typography, Button, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Send } from '@mui/icons-material';
 
 const employees = [
@@ -11,15 +11,15 @@ const employees = [
 export function PayrollTable() {
     return (
         <Paper sx={{ p: 3 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Box>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                <div>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
                         Automated Payroll
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         Pay global teams instantly in stablecoins.
                     </Typography>
-                </Box>
+                </div>
                 <Button
                     variant="outlined"
                     sx={{
@@ -33,7 +33,7 @@ export function PayrollTable() {
                 >
                     Run Payroll
                 </Button>
-            </Box>
+            </div>
 
             <TableContainer>
                 <Table>
@@ -65,13 +65,13 @@ export function PayrollTable() {
                                     />
                                 </TableCell>
                                 <TableCell>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                        <Box
-                                            sx={{
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                        <div
+                                            style={{
                                                 width: 6,
                                                 height: 6,
                                                 borderRadius: '50%',
-                                                bgcolor: emp.status === 'Paid' ? '#10b981' : '#f59e0b',
+                                                backgroundColor: emp.status === 'Paid' ? '#10b981' : '#f59e0b',
                                             }}
                                         />
                                         <Typography
@@ -80,7 +80,7 @@ export function PayrollTable() {
                                         >
                                             {emp.status}
                                         </Typography>
-                                    </Box>
+                                    </div>
                                 </TableCell>
                                 <TableCell align="right">
                                     {emp.status !== 'Paid' && (

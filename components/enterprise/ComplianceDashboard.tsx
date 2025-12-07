@@ -1,44 +1,44 @@
-import { Paper, Typography, Box, Chip } from '@mui/material';
+import { Paper, Typography, Chip } from '@mui/material';
 import { VerifiedUser, Public, Warning } from '@mui/icons-material';
 
 export function ComplianceDashboard() {
     return (
         <Paper sx={{ p: 3 }}>
-            <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+            <div style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     <VerifiedUser sx={{ color: '#10b981' }} />
                     <Typography variant="h6" fontWeight="bold">
                         Global Compliance
                     </Typography>
-                </Box>
+                </div>
                 <Typography variant="body2" color="text.secondary">
                     Real-time KYC/AML monitoring based on local news.
                 </Typography>
-            </Box>
+            </div>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Box
-                    sx={{
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div
+                    style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        p: 1.5,
-                        borderRadius: 2,
-                        bgcolor: 'rgba(16, 185, 129, 0.1)',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         border: '1px solid rgba(16, 185, 129, 0.2)',
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <Public sx={{ fontSize: 20, color: '#10b981' }} />
-                        <Box>
+                        <div>
                             <Typography variant="body2" fontWeight={500}>
                                 North America
                             </Typography>
                             <Typography variant="caption" sx={{ color: '#10b981' }}>
                                 Compliant
                             </Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                     <Chip
                         label="Low Risk"
                         size="small"
@@ -48,30 +48,30 @@ export function ComplianceDashboard() {
                             color: '#10b981',
                         }}
                     />
-                </Box>
+                </div>
 
-                <Box
-                    sx={{
+                <div
+                    style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                        p: 1.5,
-                        borderRadius: 2,
-                        bgcolor: 'rgba(245, 158, 11, 0.1)',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         border: '1px solid rgba(245, 158, 11, 0.2)',
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <Public sx={{ fontSize: 20, color: '#f59e0b' }} />
-                        <Box>
+                        <div>
                             <Typography variant="body2" fontWeight={500}>
                                 Asia Pacific
                             </Typography>
                             <Typography variant="caption" sx={{ color: '#f59e0b' }}>
                                 Regulatory Update
                             </Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                     <Chip
                         label="Medium Risk"
                         size="small"
@@ -81,7 +81,7 @@ export function ComplianceDashboard() {
                             color: '#f59e0b',
                         }}
                     />
-                </Box>
+                </div>
 
                 <Paper
                     sx={{
@@ -90,19 +90,19 @@ export function ComplianceDashboard() {
                         border: '1px solid rgba(239, 68, 68, 0.2)',
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
                         <Warning sx={{ fontSize: 16, color: '#ef4444', mt: 0.25 }} />
-                        <Box>
+                        <div>
                             <Typography variant="body2" fontWeight={500} sx={{ color: '#ef4444' }}>
                                 Alert: New Sanctions
                             </Typography>
                             <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
                                 New sanctions detected in Region X. Automatic transaction blocking enabled for affected entities.
                             </Typography>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
                 </Paper>
-            </Box>
+            </div>
         </Paper>
     );
 }

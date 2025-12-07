@@ -1,6 +1,6 @@
 "use client";
 
-import { Paper, Typography, Box } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
@@ -23,7 +23,7 @@ export function CreditScoreGauge() {
                 Community Reputation
             </Typography>
 
-            <Box sx={{ position: 'relative', height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
@@ -45,8 +45,8 @@ export function CreditScoreGauge() {
                     </PieChart>
                 </ResponsiveContainer>
 
-                <Box
-                    sx={{
+                <div
+                    style={{
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
@@ -60,11 +60,11 @@ export function CreditScoreGauge() {
                     <Typography variant="body2" sx={{ color: '#10b981', fontWeight: 500 }}>
                         Excellent
                     </Typography>
-                </Box>
-            </Box>
+                </div>
+            </div>
 
             <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 2, px: 2 }}>
-                Your on-chain reputation grants you access to <Box component="span" sx={{ color: 'text.primary', fontWeight: 600 }}>Tier 1</Box> micro-loans.
+                Your on-chain reputation grants you access to <span style={{ color: 'rgba(255, 255, 255, 0.87)', fontWeight: 600 }}>Tier 1</span> micro-loans.
             </Typography>
         </Paper>
     );

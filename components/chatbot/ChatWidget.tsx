@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import {
-    Box,
     Fab,
     Paper,
     TextField,
@@ -199,9 +198,9 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                     }}
                 >
                     {/* Header */}
-                    <Box
-                        sx={{
-                            p: 2,
+                    <div
+                        style={{
+                            padding: '16px',
                             background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
                             color: 'white',
                         }}
@@ -210,16 +209,16 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                             <Avatar sx={{ bgcolor: 'rgba(255, 255, 255, 0.2)' }}>
                                 <SmartToy />
                             </Avatar>
-                            <Box>
+                            <div>
                                 <Typography variant="h6" fontWeight={700}>
                                     Vibechain AI
                                 </Typography>
                                 <Typography variant="caption">
                                     Chat to Pay • LangChain Powered
                                 </Typography>
-                            </Box>
+                            </div>
                         </Stack>
-                    </Box>
+                    </div>
 
                     {/* Wallet Status */}
                     {!isConnected && (
@@ -229,14 +228,14 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                     )}
 
                     {/* Messages */}
-                    <Box
-                        sx={{
+                    <div
+                        style={{
                             flex: 1,
                             overflowY: 'auto',
-                            p: 2,
+                            padding: '16px',
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 2,
+                            gap: '16px',
                         }}
                     >
                         {messages.map((msg, index) => (
@@ -281,10 +280,10 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                             </Stack>
                         )}
                         <div ref={messagesEndRef} />
-                    </Box>
+                    </div>
 
                     {/* Input */}
-                    <Box sx={{ p: 2, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <div style={{ padding: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
                         <Stack direction="row" spacing={1}>
                             <TextField
                                 fullWidth
@@ -311,7 +310,7 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                                 <Send />
                             </IconButton>
                         </Stack>
-                    </Box>
+                    </div>
                 </Paper>
             </Slide>
 
@@ -343,44 +342,44 @@ export default function ChatWidget({ onPaymentRequest }: ChatWidgetProps) {
                     </Alert>
 
                     <Stack spacing={2}>
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase' }}>
                                 Amount
                             </Typography>
                             <Typography variant="h5" fontWeight={700} color="primary">
                                 {pendingPayment?.amount} {pendingPayment?.currency || 'ETH'}
                             </Typography>
-                        </Box>
+                        </div>
 
                         <Divider />
 
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase' }}>
                                 From (Your Wallet)
                             </Typography>
                             <Typography variant="body1" fontWeight={600} sx={{ wordBreak: 'break-all' }}>
                                 {truncateAddress(address || '')}
                             </Typography>
-                        </Box>
+                        </div>
 
-                        <Box>
+                        <div>
                             <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase' }}>
                                 To (Recipient)
                             </Typography>
                             <Typography variant="body1" fontWeight={600} sx={{ wordBreak: 'break-all' }}>
                                 {pendingPayment?.recipient}
                             </Typography>
-                        </Box>
+                        </div>
 
                         {pendingPayment?.note && (
-                            <Box>
+                            <div>
                                 <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase' }}>
                                     Note
                                 </Typography>
                                 <Typography variant="body2">
                                     {pendingPayment.note}
                                 </Typography>
-                            </Box>
+                            </div>
                         )}
 
                         <Alert severity="info">

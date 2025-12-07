@@ -18,12 +18,19 @@ export interface ChatMessage {
     timestamp: number;
 }
 
-// Initialize LangChain with Google Generative AI
-const model = new ChatGoogleGenerativeAI({
-    modelName: 'gemini-pro',
-    apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
-    temperature: 0.7,
-});
+// Lazy-initialized LangChain model to avoid build-time issues
+let _model: ChatGoogleGenerativeAI | null = null;
+
+function getModel(): ChatGoogleGenerativeAI {
+    if (!_model) {
+        _model = new ChatGoogleGenerativeAI({
+            modelName: 'gemini-pro',
+            apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+            temperature: 0.7,
+        });
+    }
+    return _model;
+}
 
 // Define payment intent schema
 const paymentIntentSchema = z.object({
@@ -42,7 +49,7 @@ export async function analyzePaymentIntent(message: string): Promise<PaymentInte
         const formatInstructions = paymentParser.getFormatInstructions();
         const prompt = PromptTemplate.fromTemplate(`Analyze the following message for cryptocurrency payment intent. Extract: amount, recipient address, currency, note. Message: "{message}" {format_instructions}`);
         const input = await prompt.format({ message, format_instructions: formatInstructions });
-        const response = await model.invoke(input);
+        const response = await getModel().invoke(input);
         const parsed = await paymentParser.parse(response.content as string);
         return parsed as PaymentIntent;
     } catch (error) {
@@ -70,7 +77,7 @@ export async function generateChatResponse(message: string, conversationHistory:
         const prompt = PromptTemplate.fromTemplate(`You are a helpful AI assistant for Vibechain AI, a blockchain financial platform. Be friendly and concise. Conversation: {history}\nUser: {message}\nAssistant:`);
         const history = conversationHistory.map(msg => `${msg.role}: ${msg.content}`).join('\n');
         const input = await prompt.format({ message, history });
-        const response = await model.invoke(input);
+        const response = await getModel().invoke(input);
         return response.content as string;
     } catch (error) {
         console.error('Chat response error:', error);
